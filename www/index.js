@@ -36,18 +36,24 @@ CanvasRenderingContext2D.prototype.drawCircle = function (x, y, radius) {
 
 const simulation = new sim.Simulation();
 const viewport = document.getElementById("viewport");
-const viewportWidth = viewport.width;
-const viewportHeight = viewport.height;
-const viewportScale = window.devicePixelRatio || 1;
-viewport.width = viewportWidth * viewportScale;
-viewport.height = viewportHeight * viewportScale;
-viewport.style.width = viewportWidth + "px";
-viewport.style.height = viewportHeight + "px";
 const ctxt = viewport.getContext("2d");
-ctxt.scale(viewportScale, viewportScale);
 ctxt.fillStyle = "rgb(0, 0, 0";
 
 function redraw() {
+    let viewportWidth;
+    let viewportHeight;
+    if (window.innerWidth > window.innerHeight) {
+        viewportHeight = window.innerHeight;
+        viewportWidth = window.innerHeight;
+    }
+    else {
+        viewportWidth = window.innerWidth;
+        viewportHeight = window.innerWidth;
+    }
+    const viewportScale = window.devicePixelRatio || 2;
+    viewport.width = viewportWidth * viewportScale;
+    viewport.height = viewportHeight * viewportScale;
+    ctxt.scale(viewportScale, viewportScale);
     ctxt.clearRect(0, 0, viewportWidth, viewportHeight);
 
     simulation.step();
